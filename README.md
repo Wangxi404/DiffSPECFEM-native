@@ -1,5 +1,9 @@
 # DiffSPECFEM-native
 
+**Authors** Xi Wang, Zhanwen Li, and Xin Liu (corresponding author)
+
+Department of Earth and Planetary Sciences, The University of Hong Kong
+
 We adapted SPECFEM2D with SeismicDiffSkill, a reusable Agent Skill that guides
 a coding agent through solver adaptation and gradient verification. The resulting
 DiffSPECFEM-native package runs independently. [SeismicDiffSkill](https://github.com/Wangxi404/differentiate-seismic-solver)
