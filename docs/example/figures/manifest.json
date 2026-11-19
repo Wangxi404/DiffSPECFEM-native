@@ -1,0 +1,26 @@
+{
+  "input_edition": "UH AGL download edition",
+  "accepted_updates": 300,
+  "stop_reason": "budget_exhaustion_300_updates",
+  "colormap": "Blues",
+  "shared_vp_limits_km_s": [
+    1.3523912909427667,
+    4.990505395711891
+  ],
+  "model_shape_depth_x": [
+    68,
+    200
+  ],
+  "input_npz_sha256": "17a59061b2c68095969fbc68ab2901ecc41ac8774cf1bfc70370bd1c8a424b93",
+  "final_npz_sha256": "53fc03bbe0b6ff2d2cf3d90161ffdb5e90228bf5197fcada8de255977a6f7ec9",
+  "metrics_sha256": "dd899fcb90d85aba28cc603bf8e9d72f3dc665db29689694b01c8ad835a28f32",
+  "all_original_samples_retained": true,
+  "result_metadata_matches_checkpoint": true,
+  "interpolation": "nearest; no display smoothing",
+  "loss_records": 300,
+  "array_sha256": {
+    "vp_true": "64df0a996acacf11314a73d9eb8e53dd10a82b7d8ac114f781ad6acf2c1b6354",
+    "vp_initial": "7db8245a005af561572ca0abc3638adbe2487312b87f6091501f602139d77f87",
+    "vp_inverted": "f3f32385ed7cec5294b5aa64f011d33f129b2b1bc2b2e058ce5c1d89aa620ef7"
+  }
+}

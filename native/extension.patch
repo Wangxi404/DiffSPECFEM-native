@@ -1,0 +1,100 @@
+diff --git a/src/specfem2D/compute_arrays_source.f90 b/src/specfem2D/compute_arrays_source.f90
+index fff1e77..e4d1205 100644
+--- a/src/specfem2D/compute_arrays_source.f90
++++ b/src/specfem2D/compute_arrays_source.f90
+@@ -187,6 +187,8 @@
+   real(kind=CUSTOM_REAL), dimension(NSTEP) :: temp
+   real(kind=CUSTOM_REAL), dimension(NSTEP,3) :: adj_src_s
+ 
++  logical :: binary_adjoint_exists
++  double precision, dimension(NSTEP) :: binary_adjoint_values
+   character(len=3) :: comp(3)
+   character(len=MAX_STRING_LEN) :: filename
+ 
+@@ -215,17 +217,26 @@
+ 
+       ! reads in ascii adjoint source files **.adj
+       filename = 'SEM/'//trim(adj_source_file) // '.'// comp(icomp) // '.adj'
+-      open(unit = IIN, file = trim(filename), iostat = ier)
+-      if (ier /= 0) then
+-        print *,'Error: could not find adjoint source file ',trim(filename)
+-        print *,'Please check if file exists...'
+-        call exit_MPI(myrank,'file '//trim(filename)//' does not exist')
++      inquire(file=trim(filename)//'.bin',exist=binary_adjoint_exists)
++      if (binary_adjoint_exists) then
++        open(unit=IIN,file=trim(filename)//'.bin',status='old',access='stream',form='unformatted',iostat=ier)
++        if (ier /= 0) call exit_MPI(myrank,'Cannot open binary adjoint stream')
++        read(IIN,iostat=ier) binary_adjoint_values
++        if (ier /= 0) call exit_MPI(myrank,'Cannot read binary adjoint stream')
++        adj_src_s(:,icomp)=real(binary_adjoint_values,kind=CUSTOM_REAL)
++        close(IIN)
++      else
++        open(unit = IIN, file = trim(filename), iostat = ier)
++        if (ier /= 0) then
++          print *,'Error: could not find adjoint source file ',trim(filename)
++          print *,'Please check if file exists...'
++          call exit_MPI(myrank,'file '//trim(filename)//' does not exist')
++        endif
++        do itime = 1, NSTEP
++          read(IIN,*) junk, adj_src_s(itime,icomp)
++        enddo
++        close(IIN)
+       endif
+-
+-      do itime = 1, NSTEP
+-        read(IIN,*) junk, adj_src_s(itime,icomp)
+-      enddo
+-      close(IIN)
+     enddo
+ 
+   case (4)
+diff --git a/src/specfem2D/save_adjoint_kernels.f90 b/src/specfem2D/save_adjoint_kernels.f90
+index eb6bc92..9a99e24 100644
+--- a/src/specfem2D/save_adjoint_kernels.f90
++++ b/src/specfem2D/save_adjoint_kernels.f90
+@@ -85,7 +85,7 @@
+                          rho_kl, kappa_kl, mu_kl, rhop_kl, alpha_kl, beta_kl, &
+                          bulk_c_kl, bulk_beta_kl, &
+                          rhorho_el_Hessian_final1, rhorho_el_Hessian_final2, &
+-                         rhostore,mustore,kappastore, &
++                         rhostore,mustore,kappastore,rho_vpstore,jacobian,wxgll,wzgll, &
+                          ispec_is_elastic, &
+                          deltat,NTSTEP_BETWEEN_COMPUTE_KERNELS, &
+                          APPROXIMATE_HESS_KL
+@@ -194,6 +194,16 @@
+     endif ! elastic element
+   enddo !nspec loop
+ 
++  ! Planar Vp derivative in element-local coordinates, INCLUDING GLL quadrature.
++  ! kappastore=rho*(Vp**2-Vs**2); fixed rho,Vs => d kappa/d Vp=2*rho*Vp.
++  write(outputname,'(a,i6.6,a)') trim(OUTPUT_FILES)//'proc',myrank,'_vp_gradient.bin'
++  open(unit=1891,file=trim(outputname),status='replace',form='unformatted',access='stream')
++  write(1891) (((dble(kappa_kl(i,j,ispec)/kappastore(i,j,ispec)) * &
++    2.d0*dble(rho_vpstore(i,j,ispec))* &
++    dble(jacobian(i,j,ispec)*wxgll(i)*wzgll(j)),i=1,NGLLX),j=1,NGLLZ),ispec=1,nspec)
++  write(1891) dble(kappa_kl)
++  close(1891)
++
+   ! saves elastic kernels to file
+   ! elastic domains
+   ! user output
+diff --git a/src/specfem2D/save_model_files.f90 b/src/specfem2D/save_model_files.f90
+index 849c495..021832f 100644
+--- a/src/specfem2D/save_model_files.f90
++++ b/src/specfem2D/save_model_files.f90
+@@ -124,6 +124,15 @@
+ 
+   ! SMNSR For compatibility with NUMBER_OF_SIMULTANEOUS_RUNS we have to change the lines trim(IN_DATA_FILES)//'proc'
+ 
++  ! Write the element-local GLL coordinates and integration weights.
++  write(filename,'(a,i6.6,a)') trim(IN_DATA_FILES)//'proc',myrank,'_layout.bin'
++  open(unit=1890,file=trim(filename),status='replace',form='unformatted',access='stream')
++  write(1890) nspec,NGLLX,NGLLZ
++  write(1890) (((dble(coord(1,ibool(i,j,ispec))),i=1,NGLLX),j=1,NGLLZ),ispec=1,nspec)
++  write(1890) (((dble(coord(2,ibool(i,j,ispec))),i=1,NGLLX),j=1,NGLLZ),ispec=1,nspec)
++  write(1890) (((dble(jacobian(i,j,ispec)*wxgll(i)*wzgll(j)),i=1,NGLLX),j=1,NGLLZ),ispec=1,nspec)
++  close(1890)
++
+   ! outputs model files
+   if (trim(SAVE_MODEL) == 'legacy') then
+     ! legacy format

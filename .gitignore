@@ -1,0 +1,14 @@
+/build/
+/runs/
+/.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.DS_Store
+._*
+*.log
+*_marmousi-ii.segy.gz
+model_fields.npz
+training.npz
+truth_for_observations_and_offline_only.npz
+/prepared/

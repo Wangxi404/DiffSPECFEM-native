@@ -1,0 +1,48 @@
+{
+  "schema_version": 2,
+  "upstream": {
+    "url": "https://github.com/SPECFEM/specfem2d.git",
+    "commit": "abf3196e3192af3343f2b402c82f34205577e672",
+    "tree": "fe42896b23e4111933ba0c1d335dc7f57ec8737c",
+    "license": "GPL-3.0-or-later"
+  },
+  "application": {
+    "skill_version": "0.6.1",
+    "skill_packet_sha256": "1b9fe0bcec97fe83959357e5e3b75ed27ca34301066e7b1f64bd7112081c7f7a"
+  },
+  "patch": {
+    "path": "native/extension.patch",
+    "sha256": "955e00cc936db09f875e775f2b57f14a4a3db2b7c5f300040a9c912ac0d517f7",
+    "reference_sha256": "0f71effbe68d3e09ae54baddb08bfa14a73312af87800256fd13244f87a17427",
+    "difference_from_reference": "One comment in the mesh layout writer."
+  },
+  "instrumented_sources": [
+    {
+      "path": "src/specfem2D/save_model_files.f90",
+      "original_sha256": "f65b091af4ad985ac2a28353c0e0f7944f49566d69132b234493f5bfa20b0e14",
+      "generated_sha256": "50f94757193053ad32b4e43c13172b035736d040a4c032deed15f553a5eb9941",
+      "reference_sha256": "ea34b17fd889cd47dc2bd20f1b6d3b6f1803b4c159eca98128a16b2443ab0734"
+    },
+    {
+      "path": "src/specfem2D/save_adjoint_kernels.f90",
+      "original_sha256": "05026a68f68b756f17011dc19d518397da5a88028fdfa3e9feac8c51b5a497c3",
+      "generated_sha256": "5bb86f33557b8c6ae47bad561766853cdc1ff7285a184ae67d42deeb02e6013f"
+    },
+    {
+      "path": "src/specfem2D/compute_arrays_source.f90",
+      "original_sha256": "e09f8dd4dac6da7c4fe3f440d75ad7bcf735b0a2650f1427491955c42b625462",
+      "generated_sha256": "e9cf3988d0ff1b2ac337efef3a919f625cb18b1c7ddba2f4e21b99e750491308"
+    }
+  ],
+  "reference_build": {
+    "compiler": "GCC/gfortran11.4, OpenMPI4.1.2",
+    "configure": [
+      "./configure",
+      "--with-mpi",
+      "--enable-double-precision",
+      "FC=gfortran",
+      "CC=gcc",
+      "MPIFC=mpif90"
+    ]
+  }
+}

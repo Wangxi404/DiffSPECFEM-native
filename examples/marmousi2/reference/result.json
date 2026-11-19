@@ -1,0 +1,8 @@
+{
+  "input_edition": "UH AGL download edition",
+  "completed_updates": 300,
+  "stop_reason": "budget_exhaustion_300_updates",
+  "final_full_band_objective": 3.1484386310747516e-05,
+  "final_model_sha256": "f3f32385ed7cec5294b5aa64f011d33f129b2b1bc2b2e058ce5c1d89aa620ef7",
+  "maximum_updates": 300
+}

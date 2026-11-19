@@ -1,0 +1,3 @@
+assets/marmousi2d/** -text
+docs/**/*.svg -text whitespace=-blank-at-eol
+native/extension.patch -text whitespace=-blank-at-eol

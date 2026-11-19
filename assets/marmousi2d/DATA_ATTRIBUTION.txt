@@ -1,0 +1,22 @@
+University of Houston AGL download edition of Marmousi-II
+
+Gary S. Martin, Robert Wiley and Kurt J. Marfurt
+Allied Geophysical Laboratory, University of Houston, TX, USA
+Model Definition downloads: https://www.agl.uh.edu/downloads/downloads.htm
+Data access and terms: https://www.agl.uh.edu/resources-data.php
+
+Martin, G. S., Wiley, R., and Marfurt, K. J. (2006). Marmousi2: An elastic
+upgrade for Marmousi. The Leading Edge, 25(2), 156–166.
+https://doi.org/10.1190/1.2172306
+
+We sample Vp, Vs and density on a 68 × 200 grid (depth × distance) with 45 m
+spacing. The last nominal depth of 3515 m samples the source boundary at
+3500 m. We smooth Vp with a 180 m Gaussian and apply the study's lower bound
+based on fixed Vs. Vs and density stay fixed during inversion. Material
+arrays use float32 and coordinates use float64. Velocities are in m/s,
+density in kg/m³, and coordinates in m.
+
+The three AGL source archives are downloaded by the preparation script. The
+training, truth and combined NPZ packages are generated locally. SHA-256
+values for the archives and prepared data appear in protocol.json and
+manifest.json respectively. Keep this attribution with derived work.

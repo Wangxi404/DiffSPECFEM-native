@@ -1,0 +1,37 @@
+{
+  "project": "DiffSPECFEM-native",
+  "upstream": {
+    "repository": "https://github.com/SPECFEM/specfem2d",
+    "commit": "abf3196e3192af3343f2b402c82f34205577e672"
+  },
+  "application": {
+    "tool": "SeismicDiffSkill",
+    "version": "0.6.1",
+    "original_source_sha256": {
+      "native_interface": "baea0d9b0b00b7b0756585c6c86171c1c359a086fbc3500282b952e656539e77",
+      "inversion": "bc74f34b174eb5278cb89b1a32af28ea99b93a5ed1a9e00d28d76d39e09f9e24",
+      "objective": "4aedc1937ebf9c61020080c8e60516c63b3e0114210599a67e93438a7768a1f3",
+      "soft_dtw_objective": "f37dcaa66d9399b27545563fe125672e95a83535e4b7ba1ae51e5a60d027fefc"
+    }
+  },
+  "reference_result": {
+    "accepted_updates": 300,
+    "objective": "soft_dtw_divergence",
+    "stop_reason": "budget_exhaustion_300_updates",
+    "native_model_sha256": "f3f32385ed7cec5294b5aa64f011d33f129b2b1bc2b2e058ce5c1d89aa620ef7",
+    "checkpoint_file_sha256": "53fc03bbe0b6ff2d2cf3d90161ffdb5e90228bf5197fcada8de255977a6f7ec9",
+    "input_edition": "UH AGL download edition",
+    "input_source": {
+      "packet_version": "SeismicDiffSkill0.6.9",
+      "packet_sha256": "90f5931d84922120fab19c89f879e5c2d7eb90f12730c0a803f4dae25ed0fd97",
+      "model_sha256": "17a59061b2c68095969fbc68ab2901ecc41ac8774cf1bfc70370bd1c8a424b93"
+    }
+  },
+  "default_inputs": {
+    "profile": "marmousi-ii-fast40-softdtw-v1",
+    "source_edition": "University of Houston AGL download edition of Marmousi-II",
+    "model_sha256": "17a59061b2c68095969fbc68ab2901ecc41ac8774cf1bfc70370bd1c8a424b93",
+    "protocol": "../assets/marmousi2d/protocol.json",
+    "scope": "Reconstructed at runtime from the same AGL source files used in the 300-update experiment."
+  }
+}

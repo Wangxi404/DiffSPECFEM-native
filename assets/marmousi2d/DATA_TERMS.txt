@@ -1,0 +1,10 @@
+Marmousi-II model data
+
+The University of Houston Allied Geophysical Laboratory lists the Marmousi II
+Dataset under Level 3 – Limited. Consult the provider's terms for your use.
+https://www.agl.uh.edu/resources-data.php
+https://www.agl.uh.edu/downloads/downloads.htm
+
+The software obtains the three Model Definition archives directly from AGL
+and prepares the model on the user's machine. The repository's software
+license applies to code. Model inputs remain subject to AGL's data terms.

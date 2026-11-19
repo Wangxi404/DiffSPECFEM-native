@@ -1,0 +1,108 @@
+{
+  "status": "passed",
+  "scope": "University of Houston AGL download edition of Marmousi-II. First 40-shot update and native checks. The scalar metrics for all 300 updates are in examples/marmousi2/reference.",
+  "native_build": {
+    "source_commit": "abf3196e3192af3343f2b402c82f34205577e672",
+    "fresh_build": true,
+    "precision": "float64",
+    "physics": "planar elastic P-SV",
+    "workers": 8,
+    "native_ranks_per_shot": 1,
+    "data_objective_device": "CUDA"
+  },
+  "numerical_checks": {
+    "model_map_dot_relative": 3.628267300879675e-16,
+    "sampling_dot_relative": 8.089607396220973e-16,
+    "actual_soft_dtw_data_vjp": "passed",
+    "native_single_shot_directional": {
+      "status": "passed",
+      "shots": [
+        0
+      ],
+      "stages": [
+        3.0
+      ],
+      "steps": [
+        {
+          "step_m_s": 2.0,
+          "adjoint_dot": 5.526459732352952e-06,
+          "centered_difference": 5.52620692546659e-06,
+          "relative_error": 4.5744816502023614e-05
+        },
+        {
+          "step_m_s": 1.0,
+          "adjoint_dot": 5.526459732352952e-06,
+          "centered_difference": 5.526396526779457e-06,
+          "relative_error": 1.1436901118653199e-05
+        }
+      ]
+    },
+    "full40_gradient_relative_l2_vs_original": 0.0,
+    "first_accepted_model_bitwise_matches_original": true,
+    "mean_gradient_is_sum_divided40": true
+  },
+  "full_shot_ledger": {
+    "shots": 40,
+    "one_common_model": true,
+    "normalizer": 40,
+    "accepted_updates": 1
+  },
+  "portable_run": {
+    "completed_updates": 1,
+    "stop_reason": "budget_exhaustion_1_updates",
+    "final_model_sha256": "b523f142b83df8601439174395939a2d4e6d712a1fed7a2e361b892be93335d8",
+    "html_generated": true,
+    "png_pdf_svg_generated": true,
+    "process_exit": "exited"
+  },
+  "source_lineage": "source-provenance.json",
+  "upstream_forward_comparison": {
+    "scope": "Raw native displacement traces from paired upstream and patched builds using identical inputs.",
+    "commit": "abf3196e3192af3343f2b402c82f34205577e672",
+    "patch_sha256": "0f71effbe68d3e09ae54baddb08bfa14a73312af87800256fd13244f87a17427",
+    "precision": "float64",
+    "physics": "2-D isotropic elastic P-SV",
+    "components": [
+      "Ux",
+      "Uz"
+    ],
+    "cases": [
+      {
+        "shot_id": 0,
+        "vp": "vp_true",
+        "save_forward": false
+      },
+      {
+        "shot_id": 19,
+        "vp": "vp_initial",
+        "save_forward": true
+      },
+      {
+        "shot_id": 39,
+        "vp": "vp_true",
+        "save_forward": false
+      }
+    ],
+    "receivers": 200,
+    "native_samples_per_trace": 7500,
+    "native_samples_compared": 9000000,
+    "byte_identical_component_files": 6,
+    "max_absolute_error": 0.0,
+    "max_relative_l2": 0.0
+  },
+  "build_identity_checks": {
+    "pinned_checkout_depth": 1,
+    "verified_cached_build": true,
+    "byte_identical_relocated_executables_accepted": true,
+    "other_build_executables_rejected": true
+  },
+  "current_patch_check": {
+    "patch_sha256": "955e00cc936db09f875e775f2b57f14a4a3db2b7c5f300040a9c912ac0d517f7",
+    "device": "cpu",
+    "native_build": "passed",
+    "data_vjp": "passed",
+    "model_map_dot_relative": 3.628267300879675e-16,
+    "sampling_dot_relative": 8.089607396220973e-16,
+    "template_Ux_Uz_bitwise_equal_to_first_release": true
+  }
+}

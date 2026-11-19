@@ -1,0 +1,46 @@
+{
+  "profile_id": "marmousi-ii-fast40-softdtw-v1",
+  "physical_input": {
+    "shape_depth_x": [
+      68,
+      200
+    ],
+    "spacing_m": 45.0,
+    "original_x_m": [
+      5000.0,
+      13955.0
+    ],
+    "depth_m": [
+      500.0,
+      3515.0
+    ],
+    "source_max_depth_m": 3500.0,
+    "initial_smoothing_sigma_m": 180.0,
+    "source_field_dtype": "float32",
+    "coordinate_dtype": "float64",
+    "unknown": "Vp",
+    "fixed": [
+      "Vs",
+      "density"
+    ],
+    "water_in_this_region": false,
+    "preprocessing": "Sample the AGL model on the 45 m grid. The nominal last depth (3515 m) samples the source boundary (3500 m). Initial Vp uses a Gaussian filter with a four-cell standard deviation and reflected boundaries."
+  },
+  "sources": {
+    "vp_marmousi-ii.segy.gz": {
+      "url": "https://www.agl.uh.edu/downloads/vp_marmousi-ii.segy.gz",
+      "sha256": "2c7a0c4170c95a15620c2146573711c61a4cef8dc27338ef6c211a81ffa68920",
+      "bytes": 1766045
+    },
+    "vs_marmousi-ii.segy.gz": {
+      "url": "https://www.agl.uh.edu/downloads/vs_marmousi-ii.segy.gz",
+      "sha256": "c88bec68fc4bd7c6e624737a20ecd3241c90e10512103e28e61b344fb5baed7d",
+      "bytes": 1768606
+    },
+    "density_marmousi-ii.segy.gz": {
+      "url": "https://www.agl.uh.edu/downloads/density_marmousi-ii.segy.gz",
+      "sha256": "9832e20ce1f79470fa8c100e79d66566cf8c1c162baa4289f37e7ee0b96f1e67",
+      "bytes": 1732687
+    }
+  }
+}

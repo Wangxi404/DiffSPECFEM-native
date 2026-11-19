@@ -1,0 +1,22 @@
+DiffSPECFEM-native
+Copyright (c) 2026 Sid
+
+The native extension and new inversion/example code are GPL-3.0-or-later.
+SPECFEM2D retains its upstream authors' copyright and licence notices.
+The build helper obtains original upstream source at pinned commit
+abf3196e3192af3343f2b402c82f34205577e672 from
+https://github.com/SPECFEM/specfem2d.
+The GPL text in LICENSE is retained from that pinned upstream revision.
+In the patch distributed on 2026-11-18, Sid modified compute_arrays_source.f90,
+save_model_files.f90 and save_adjoint_kernels.f90 to read binary adjoint
+sources and export mesh and sensitivity data. See native/extension.patch.
+
+The data-only soft-DTW fixture retains its MIT notice in
+LICENSE.soft-dtw-objective. PySDTW 0.0.5 is installed separately and is
+MIT-licensed, copyright 2020 Mehran Maghoumi and 2022 Antoine Loriette.
+https://github.com/toinsson/pysdtw/blob/v0.0.5/LICENSE
+
+The Marmousi-II inversion uses the University of Houston AGL download edition.
+The software downloads the Model Definition files from AGL and prepares the
+model locally. See assets/marmousi2d/DATA_ATTRIBUTION.txt for authorship and
+processing, and assets/marmousi2d/DATA_TERMS.txt for the source terms.
