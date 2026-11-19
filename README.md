@@ -22,6 +22,10 @@ whole-model Vp RMSE fell from **362 to 191 m/s**.
 The mesh under-resolves shear waves in some low-Vs regions.
 [AGL source](https://www.agl.uh.edu/downloads/downloads.htm) · [Model paper](https://doi.org/10.1190/1.2172306)
 
+![Marmousi-II Vp, from left to right: true model, Gaussian initial model and DiffSPECFEM-native inversion after 300 updates](docs/example/figures/models.png)
+
+*True, initial and inverted Vp share the same velocity scale. Marmousi-II model by Gary S. Martin, Robert Wiley and Kurt J. Marfurt (University of Houston AGL).*
+
 ![Debiased soft-DTW divergence over the three inversion stages](docs/example/figures/loss.png)
 
 ## Run the example
