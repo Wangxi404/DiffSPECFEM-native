@@ -21,14 +21,13 @@ The example uses 2D elastic P–SV waves, float64 propagation and debiased
 soft-DTW divergence. Each update uses all 40 shots and 200 receivers to recover
 Vp with Vs and density fixed. We use **the University of Houston AGL download
 edition of Marmousi-II** for both the paper and this example. The starting
-model is a 180 m Gaussian blur of Vp on a 68 × 200 grid. After 300 updates,
-whole-model Vp RMSE fell from **362 to 191 m/s**.
+model is a 180 m Gaussian blur of Vp on a 68 × 200 grid.
 The mesh under-resolves shear waves in some low-Vs regions.
 [AGL source](https://www.agl.uh.edu/downloads/downloads.htm) · [Model paper](https://doi.org/10.1190/1.2172306)
 
 ![Marmousi-II Vp, from left to right: true model, Gaussian initial model and DiffSPECFEM-native inversion after 300 updates](docs/example/figures/models.png)
 
-*True, initial and inverted Vp share the same velocity scale. Marmousi-II model by Gary S. Martin, Robert Wiley and Kurt J. Marfurt (University of Houston AGL).*
+*True Vp, initial Vp and inverted Vp after 300 updates share the same velocity scale. Marmousi-II model by Gary S. Martin, Robert Wiley and Kurt J. Marfurt (University of Houston AGL).*
 
 ![Debiased soft-DTW divergence over the three inversion stages](docs/example/figures/loss.png)
 
