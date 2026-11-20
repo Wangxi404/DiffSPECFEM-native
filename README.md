@@ -17,8 +17,11 @@ run and figures. [Data objective](diffspecfem/objective.py) · [Configuration](e
 
 ## Marmousi-II inversion
 
-The example uses 2D elastic P–SV waves, float64 propagation and debiased
-soft-DTW divergence. Each update uses all 40 shots and 200 receivers to recover
+The example uses 2D elastic P–SV waves and float64 propagation.
+We chose debiased soft-DTW divergence as the default because its time-alignment
+terms make the adjoint source difficult to derive by hand, and PyTorch lets you
+switch to another differentiable misfit without deriving a new adjoint source.
+Each update uses all 40 shots and 200 receivers to recover
 Vp with Vs and density fixed. We use **the University of Houston AGL download
 edition of Marmousi-II** for both the paper and this example. The starting
 model is a 180 m Gaussian blur of Vp on a 68 × 200 grid.
