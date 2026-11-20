@@ -1,16 +1,19 @@
-# DiffSPECFEM-native
+# DiffSPECFEM2D
 
 **Authors** Xi Wang, Zhanwen Li, and Xin Liu (corresponding author)
 
 Department of Earth and Planetary Sciences, The University of Hong Kong
 
-We adapted SPECFEM2D with SeismicDiffSkill, a reusable Agent Skill that guides
-a coding agent through solver adaptation and gradient verification. The resulting
-DiffSPECFEM-native package runs independently. [SeismicDiffSkill](https://github.com/Wangxi404/differentiate-seismic-solver)
-Forward and adjoint waves propagate in SPECFEM2D's native Fortran solver. PyTorch differentiates
-the misfit with respect to the receiver traces to form the adjoint source.
-SPECFEM2D then computes the Vp gradient.
-To use a different misfit, implement its scalar PyTorch loss in
+DiffSPECFEM2D is the standalone inversion package in this repository. We built it
+from SPECFEM2D with the SeismicDiffSkill Agent Skill. [SeismicDiffSkill](https://github.com/Wangxi404/differentiate-seismic-solver)
+
+For each shot, PyTorch differentiates the misfit with respect to the synthetic
+receiver traces. The adapter applies the transpose of time sampling to this
+data gradient. SPECFEM2D injects the resulting traces at the receivers as the
+adjoint source and computes the Vp gradient from its native forward and adjoint
+wavefields. [Data derivative](diffspecfem/objective.py) · [Native solver interface](diffspecfem/native.py)
+
+To use a different misfit, implement a scalar PyTorch loss for **one shot** in
 `Fast40Objective.tensor_loss` and adapt observation preparation in
 `Fast40Objective.__init__` as needed. Set `objective.kind` to label the saved
 run and figures. [Data objective](diffspecfem/objective.py) · [Configuration](examples/marmousi2/config.json)
@@ -21,14 +24,19 @@ The example uses 2D elastic P–SV waves and float64 propagation.
 We chose debiased soft-DTW divergence as the default because its time-alignment
 terms make the adjoint source difficult to derive by hand, and PyTorch lets you
 switch to another differentiable misfit without deriving a new adjoint source.
-Each update uses all 40 shots and 200 receivers to recover
-Vp with Vs and density fixed. We use **the University of Houston AGL download
+For each shot, the default loss divides each trace divergence by its processed
+sample count and averages over the two components at all 200 receivers. Each
+iteration evaluates all 40 shots at the same model, sums their losses and
+gradients, and divides each sum by 40 once. The optimizer uses this mean
+gradient to update Vp with Vs and density fixed.
+
+We use **the University of Houston AGL download
 edition of Marmousi-II** for both the paper and this example. The starting
 model is a 180 m Gaussian blur of Vp on a 68 × 200 grid.
 The mesh under-resolves shear waves in some low-Vs regions.
 [AGL source](https://www.agl.uh.edu/downloads/downloads.htm) · [Model paper](https://doi.org/10.1190/1.2172306)
 
-![Marmousi-II Vp, from left to right: true model, Gaussian initial model and DiffSPECFEM-native inversion after 300 updates](docs/example/figures/models.png)
+![Marmousi-II Vp, from left to right: true model, Gaussian initial model and DiffSPECFEM2D inversion after 300 updates](docs/example/figures/models.png)
 
 *True Vp, initial Vp and inverted Vp after 300 updates share the same velocity scale. Marmousi-II model by Gary S. Martin, Robert Wiley and Kurt J. Marfurt (University of Houston AGL).*
 
@@ -46,6 +54,10 @@ python -m pip install -r requirements.txt
 python scripts/build_specfem.py --jobs 8
 python scripts/invert_marmousi.py --workers 8 --device cpu
 ```
+
+Add `--check-gradient` to the inversion command to check one shot at the
+starting model. It compares the inner product of the Vp gradient and a test
+direction with a centered finite difference of the same shot's loss.
 
 With CUDA-enabled PyTorch and a CUDA toolkit for Numba, use `--device cuda:0`
 to run the misfit on the GPU. SPECFEM2D runs on the CPU in both cases.
